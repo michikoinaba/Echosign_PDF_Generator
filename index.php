@@ -1,7 +1,7 @@
 <?php
 /**
- * this tool is used to retreive multiple files with homeowner's email addresses from the spreadsheet
- * 1. get the excel sheet with the list of homeowners' email addresses.
+ * this tool is used to retreive multiple files with users' email addresses from the spreadsheet
+ * 1. get the excel sheet with the list of users' email addresses.
  * 2. read the spreadsheet and generate an array with all email addresses.
  * 3. loop through the email array and get an echsign doc_key from the documents table
  * 4. get a pdf form content with the doc_key from echosign API.
@@ -17,7 +17,7 @@ ini_set('display_startup_errors', TRUE);
 require_once dirname(__FILE__) . '/Classes/PHPExcel/IOFactory.php';
 require_once dirname(__FILE__) .'/Classes/PHPExcel/Autoloader.php';
 
-$_echosign_api_url = (string)'https://secure.echosign.com/services/EchoSignDocumentService21?wsdl';
+$_echosign_api_url = (string)'https://secure.echosign.com/services/EchoSignDocumentServicexxxx?wsdl';
 $_echosign_api_key = (string)"echosign_key";
 
 //read the spreadsheet and get all homeowners email addresses
@@ -83,7 +83,7 @@ $k=0;
 foreach($emails as $key=>$email){
 
 	
-	$query = "SELECT doc_key FROM homeowners h, documents d where h.id=d.homeowner_id and h.email='".trim($email)."'";
+	$query = "SELECT doc_key FROM users h, documents d where h.id=d.id and h.email='".trim($email)."'";
 	mysqli_query($link, $query) or die('Error querying database.');
 	
 	$result = mysqli_query($link, $query);
